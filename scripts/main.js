@@ -1,61 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize loaders
     const initialLoader = document.getElementById('initial-loader');
     const transitionLoader = document.getElementById('transition-loader');
-    const loaderTexts = [
-        "Summoning the spirits...",
-        "Crossing the veil...",
-        "Whispers from the beyond..."
-    ];
-    let currentTextIndex = 0;
-
-    // Initial loader text rotation
-    const rotateText = () => {
-        const loaderText = initialLoader.querySelector('.loader-text');
-        loaderText.textContent = loaderTexts[currentTextIndex];
-        currentTextIndex = (currentTextIndex + 1) % loaderTexts.length;
-    };
     
-    setInterval(rotateText, 2000);
-
-    const MINIMUM_LOAD_TIME = 1200;
-    const loadStartTime = Date.now();
-
-    window.addEventListener('load', () => {
-        const currentTime = Date.now();
-        const elapsedTime = currentTime - loadStartTime;
-        const remainingTime = Math.max(MINIMUM_LOAD_TIME - elapsedTime, 0);
-
+    // Hide initial loader after delay
+    setTimeout(() => {
+        initialLoader.classList.add('fade-out');
         setTimeout(() => {
-            initialLoader.style.opacity = '0';
-            initialLoader.style.transition = 'opacity 0.5s ease-out';
-            setTimeout(() => {
-                initialLoader.classList.add('hidden');
-            }, 500);
-        }, remainingTime);
-    });
-
-    // Handle transition loaders for buttons
-    const handleTransition = (text, targetUrl) => {
-        transitionLoader.classList.remove('hidden');
-        transitionLoader.querySelector('.loader-text').textContent = text;
-        transitionLoader.style.opacity = '1';
-        
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 1200);
-    };
-
-    // Add click handlers to navigation buttons
+            initialLoader.style.display = 'none';
+        }, 500);
+    }, 2000);
+    
+    // Handle navigation with transitions
     document.querySelectorAll('[data-href]').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetUrl = button.getAttribute('data-href');
+            const href = button.getAttribute('data-href');
             const isGraveyard = button.textContent.includes('Graveyard');
             const loaderText = isGraveyard ? 
                 "Opening the gates to the beyond..." : 
                 "Preparing your spectral stake...";
             
-            handleTransition(loaderText, targetUrl);
+            // Show transition loader
+            transitionLoader.classList.remove('hidden');
+            transitionLoader.querySelector('.loader-text').textContent = loaderText;
+            
+            // Navigate after delay, appending .html for actual file
+            setTimeout(() => {
+                const targetUrl = href.endsWith('.html') ? href : href + '.html';
+                window.location.href = targetUrl;
+            }, 1000);
         });
     });
-}); 
+    
+    // Initialize floating ghosts
+    initializeFloatingGhosts();
+});
+
+function initializeFloatingGhosts() {
+    const ghostsContainer = document.querySelector('.floating-ghosts');
+    const numGhosts = 5;
+    
+    for (let i = 0; i < numGhosts; i++) {
+        const ghost = document.createElement('div');
+        ghost.className = 'ghost';
+        ghost.style.left = `${Math.random() * 100}%`;
+        ghost.style.top = `${Math.random() * 100}%`;
+        ghost.style.animationDelay = `${Math.random() * 2}s`;
+        ghostsContainer.appendChild(ghost);
+    }
+} 
