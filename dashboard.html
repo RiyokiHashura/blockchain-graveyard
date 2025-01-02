@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@solana/wallet-adapter-phantom@0.9.7/lib/index.iife.min.js"></script>
 </head>
 <body>
     <button class="connect-wallet-btn" id="connectWalletBtn">
@@ -26,8 +28,17 @@
             <div class="dashboard-container">
                 <nav class="sidebar">
                     <div class="sidebar-header">
-                        <h1>RIP Protocol</h1>
-                        <div class="ghost-ornament"></div>
+                        <div class="brand-container">
+                            <div class="brand-logo">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z M12 4.5c-4.13 0-7.5 3.37-7.5 7.5v6c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2v-6c0-4.13-3.37-7.5-7.5-7.5zm-3.75 7.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7.5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                                </svg>
+                            </div>
+                            <div class="brand-text">
+                                <h1>RIP Protocol</h1>
+                                <span class="brand-subtitle">Stake in the Beyond</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="nav-links" id="tabNavigation">
@@ -83,18 +94,18 @@
                             <div class="stats-overview">
                                 <div class="stat-card">
                                     <h3>Total Value Haunted</h3>
-                                    <div class="stat-value" id="totalValueHaunted">$7.3M</div>
-                                    <div class="stat-change positive">+12.4%</div>
+                                    <div class="stat-value" id="totalValueHaunted">$384.5K</div>
+                                    <div class="stat-change positive">+8.2%</div>
                                 </div>
                                 <div class="stat-card">
                                     <h3>Active Ghost Vaults</h3>
-                                    <div class="stat-value" id="activeVaults">128</div>
-                                    <div class="stat-change">+18 this week</div>
+                                    <div class="stat-value" id="activeVaults">21</div>
+                                    <div class="stat-change">+3 this week</div>
                                 </div>
                                 <div class="stat-card">
                                     <h3>Spectral APY</h3>
-                                    <div class="stat-value" id="spectralAPY">26.4%</div>
-                                    <div class="stat-change negative">-1.7%</div>
+                                    <div class="stat-value" id="spectralAPY">15.8%</div>
+                                    <div class="stat-change negative">-0.4%</div>
                                 </div>
                             </div>
                             
@@ -165,12 +176,35 @@
                         </div>
                         
                         <div class="tab-pane" id="tombstonesContent">
-                            <h2>Tombstone NFT Minting</h2>
-                            <p>Immortalize fallen projects in our eternal blockchain cemetery.</p>
+                            <div class="tombstone-minting-header">
+                                <h2 class="tombstone-minting-title" style="
+                                    font-family: 'Inter', var(--font-tech);
+                                    font-size: 2.6rem;
+                                    font-weight: 800;
+                                    color: #C084FC;
+                                    text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+                                    letter-spacing: 0.05em;
+                                    text-align: left;
+                                ">Tombstone NFT Minting</h2>
+                                
+                                <p class="tombstone-minting-subtitle" style="
+                                    font-size: 1rem;
+                                    color: #A1A1C0;
+                                    font-style: italic;
+                                    margin-bottom: 8px;
+                                ">Immortalize fallen projects in our eternal blockchain cemetery.</p>
+                                
+                                <div style="
+                                    width: 60%;
+                                    height: 1px;
+                                    background: rgba(192, 132, 252, 0.2);
+                                    margin: 8px 0 8px 0;
+                                "></div>
+                            </div>
                             
                             <div class="tombstone-minting-container">
                                 <div class="minting-form">
-                                    <div class="form-group">
+                                    <div class="form-group" style="margin-top: 0;">
                                         <label for="projectName">Project Name</label>
                                         <input type="text" id="projectName" placeholder="e.g., LUNA Classic" maxlength="30">
                                     </div>
@@ -206,13 +240,29 @@
                         
                         <div class="tab-pane" id="leaderboardContent">
                             <div class="section-header">
-                                <h2>Haunted Leaderboard</h2>
-                                <button class="refresh-button">
-                                    <svg class="icon-refresh" viewBox="0 0 24 24">
-                                        <path d="M12 4V2.21c0-.45-.54-.67-.85-.35l-2.8 2.79c-.2.2-.2.51 0 .71l2.8 2.79c.31.32.85.09.85-.35V6c3.31 0 6 2.69 6 6 0 .79-.15 1.56-.44 2.25-.15.36-.04.77.23 1.04.51.51.51 1.37.33 1.64-.34.37-.91.57-1.91.57-2.95 0-4.42-3.58-8-8-8z"/>
-                                    </svg>
-                                    Refresh Spirits
-                                </button>
+                                <h2 class="section-title" style="
+                                    font-family: 'Inter', var(--font-tech);
+                                    font-size: 2.6rem;
+                                    font-weight: 800;
+                                    color: #C084FC;
+                                    text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+                                    letter-spacing: 0.05em;
+                                    text-align: left;
+                                ">Haunted Leaderboard</h2>
+                                
+                                <p class="section-subtitle" style="
+                                    font-size: 1rem;
+                                    color: #A1A1C0;
+                                    font-style: italic;
+                                    margin-bottom: 8px;
+                                ">Track the most haunted tokens in our ethereal ecosystem.</p>
+                                
+                                <div style="
+                                    width: 60%;
+                                    height: 1px;
+                                    background: rgba(192, 132, 252, 0.2);
+                                    margin: 8px 0 8px 0;
+                                "></div>
                             </div>
                             
                             <div class="haunted-stakers-leaderboard">
@@ -233,8 +283,31 @@
                         </div>
                         
                         <div class="tab-pane" id="decayContent">
-                            <h2>Liquidity Decay Tracker</h2>
-                            <p>Watch as abandoned tokens fade into the void...</p>
+                            <div class="section-header">
+                                <h2 class="section-title" style="
+                                    font-family: 'Inter', var(--font-tech);
+                                    font-size: 2.6rem;
+                                    font-weight: 800;
+                                    color: #C084FC;
+                                    text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+                                    letter-spacing: 0.05em;
+                                    text-align: left;
+                                ">Liquidity Decay Tracker</h2>
+                                
+                                <p class="section-subtitle" style="
+                                    font-size: 1rem;
+                                    color: #A1A1C0;
+                                    font-style: italic;
+                                    margin-bottom: 8px;
+                                ">Monitor the ethereal dissipation of abandoned pools.</p>
+                                
+                                <div style="
+                                    width: 60%;
+                                    height: 1px;
+                                    background: rgba(192, 132, 252, 0.2);
+                                    margin: 8px 0 8px 0;
+                                "></div>
+                            </div>
                             
                             <div class="liquidity-decay-tracker">
                                 <div class="decay-chart-container">
@@ -259,8 +332,31 @@
                         </div>
                         
                         <div class="tab-pane" id="oracleContent">
-                            <h2>Spirit Oracle Interface</h2>
-                            <p>Commune with the beyond...</p>
+                            <div class="section-header">
+                                <h2 class="section-title" style="
+                                    font-family: 'Inter', var(--font-tech);
+                                    font-size: 2.6rem;
+                                    font-weight: 800;
+                                    color: #C084FC;
+                                    text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+                                    letter-spacing: 0.05em;
+                                    text-align: left;
+                                ">Spirit Oracle Chatbot</h2>
+                                
+                                <p class="section-subtitle" style="
+                                    font-size: 1rem;
+                                    color: #A1A1C0;
+                                    font-style: italic;
+                                    margin-bottom: 8px;
+                                ">Channel the wisdom of deceased tokens through our ethereal interface.</p>
+                                
+                                <div style="
+                                    width: 60%;
+                                    height: 1px;
+                                    background: rgba(192, 132, 252, 0.2);
+                                    margin: 8px 0 8px 0;
+                                "></div>
+                            </div>
                             
                             <div class="oracle-interface">
                                 <div class="oracle-messages" id="oracleMessages">
@@ -288,5 +384,7 @@
     </div>
 
     <script src="scripts/dashboard.js"></script>
+    <script src="scripts/wallet.js"></script>
 </body>
 </html> 
+

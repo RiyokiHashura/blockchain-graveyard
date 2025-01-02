@@ -31,23 +31,104 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const connectWalletBtn = document.getElementById('connectWalletBtn');
-    
+
     if (connectWalletBtn) {
+        console.log('Found connect wallet button');
+        
         connectWalletBtn.addEventListener('click', async () => {
+            console.log('Connect wallet button clicked');
             try {
-                const provider = window.solana;
+                const provider = window?.phantom?.solana;
+                console.log('Provider:', provider);
+                
                 if (!provider) {
+                    console.log('No provider found, opening Phantom website');
                     window.open('https://phantom.app/', '_blank');
                     return;
                 }
-                
+
+                console.log('Attempting to connect...');
                 await provider.connect();
+                console.log('Connected successfully');
+                
                 connectWalletBtn.textContent = 'Connected';
                 connectWalletBtn.style.background = 'rgba(138, 166, 214, 0.2)';
+                showToast('Wallet connected successfully!');
+
             } catch (err) {
                 console.error('Failed to connect wallet:', err);
+                showToast('Failed to connect wallet');
             }
         });
+    } else {
+        console.error('Connect wallet button not found');
+    }
+
+    // Add click handler for home button
+    document.querySelector('.home-button').addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Fade out current content
+        document.body.classList.add('fade-transition');
+        
+        // Show transition loader
+        const transitionLoader = document.getElementById('transition-loader');
+        transitionLoader.style.display = 'flex';
+        transitionLoader.querySelector('.loader-text').textContent = "Returning to the crypt...";
+        
+        // Navigate after delay
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
+    });
+
+
+    // Add click handler for mint button
+    document.querySelector('.mint-button').addEventListener('click', () => {
+        showToast('Connect your wallet to mint!');
+    });
+
+    // Add click handlers for stake buttons
+    document.querySelectorAll('.stake-button-small').forEach(button => {
+        button.addEventListener('click', () => {
+            showToast('Connect your wallet to stake!');
+        });
+    });
+
+    // Add click handler for mint button
+    const mintButton = document.querySelector('.mint-button');
+    if (mintButton) {
+        mintButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('Connect your wallet to mint!');
+        });
+    }
+
+    // Add toast notification styles if not already present
+    if (!document.querySelector('#toast-styles')) {
+        const style = document.createElement('style');
+        style.id = 'toast-styles';
+        style.textContent = `
+            .toast-notification {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
+                background: rgba(43, 43, 51, 0.9);
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 4px;
+                border: 1px solid rgba(138, 166, 214, 0.2);
+                z-index: 10000;
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+            .toast-notification.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        `;
+        document.head.appendChild(style);
     }
 });
 
@@ -99,6 +180,8 @@ function initializeTombstoneMinting() {
     const epitaph = document.getElementById('epitaph');
     const mintButton = document.querySelector('.mint-button');
     
+    if (!mintButton) return;
+    
     function updatePreview() {
         document.getElementById('previewName').textContent = 
             projectName.value || 'Project Name';
@@ -112,31 +195,8 @@ function initializeTombstoneMinting() {
         input.addEventListener('input', updatePreview);
     });
     
-    mintButton.addEventListener('click', async () => {
-        mintButton.disabled = true;
-        mintButton.textContent = 'Carving Tombstone...';
-        
-        // Simulate minting delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        mintButton.textContent = 'Memorial NFT Minted!';
-        setTimeout(() => {
-            mintButton.disabled = false;
-            mintButton.textContent = 'Mint Memorial NFT';
-        }, 2000);
-    });
-    
-    deathDate.type = 'text';
-    deathDate.placeholder = 'MM/DD/YYYY';
-    
-    deathDate.addEventListener('input', (e) => {
-        const value = e.target.value;
-        if (value.length === 10) {
-            const date = new Date(value);
-            if (!isNaN(date.getTime())) {
-                updatePreview();
-            }
-        }
+    mintButton.addEventListener('click', () => {
+        showToast('Connect your wallet to mint!');
     });
 }
 
@@ -458,7 +518,7 @@ function showToast(message) {
     }, 2500);
 }
 
-function animateValue(element, start, end, duration) {
+function animateValue(element, start, end, duration, isCurrency) {
     const range = end - start;
     const increment = range / (duration / 16);
     let current = start;
@@ -484,27 +544,49 @@ function animateValue(element, start, end, duration) {
 }
 
 function initializeStatAnimations() {
-    // Reference dashboard.html lines 62-78 for stat elements
     const tvhElement = document.getElementById('totalValueHaunted');
     const vaultsElement = document.getElementById('activeVaults');
     
-    // Parse initial values
-    const tvhValue = parseFloat(tvhElement.textContent.replace(/[^0-9.]/g, '')) * 1e6;
-    const vaultsValue = parseInt(vaultsElement.textContent.replace(/,/g, ''));
+    // Parse initial values (384.5K = 384500)
+    const tvhValue = 384500;
+    const vaultsValue = 21;
     
     // Animate from 0 to final value
-    animateValue(tvhElement, 0, tvhValue, 2000);
+    animateValue(tvhElement, 0, tvhValue, 2000, true); // true flag for currency format
     animateValue(vaultsElement, 0, vaultsValue, 2000);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Add click handlers for all stake-related buttons
-    const stakeButtons = document.querySelectorAll('.cta-button-large');
-    
-    stakeButtons.forEach(stakeButton => {
-        stakeButton.addEventListener('click', () => {
+function initializeStakeButtons() {
+    // Add click handlers for all stake buttons in the dashboard
+    document.querySelectorAll('.stake-button').forEach(button => {
+        button.addEventListener('click', () => {
             showToast('Connect your wallet to stake!');
         });
+    });
+}
+
+function showStakeToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+    });
+
+    setTimeout(() => {
+        if (document.body.contains(toast)) {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }
+    }, 2500);
+}
+
+// Add click handlers for stake buttons
+document.querySelectorAll('.stake-button-small').forEach(button => {
+    button.addEventListener('click', () => {
+        showStakeToast('Connect your wallet to stake!');
     });
 });
 
