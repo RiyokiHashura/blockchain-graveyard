@@ -1,0 +1,868 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--midnight-black);
+    color: var(--ghost-white);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+/* Navigation */
+.main-nav {
+    background-color: var(--tombstone-gray);
+    padding: var(--spacing-md);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-family: var(--font-gothic);
+    font-size: 1.5rem;
+    color: var(--ghost-white);
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--ghost-white);
+    text-decoration: none;
+    font-family: var(--font-tech);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--ethereal-blue);
+    text-shadow: 0 0 10px rgba(138, 166, 214, 0.5);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(
+        rgba(11, 11, 15, 0.95),
+        rgba(57, 43, 77, 0.85)
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+.fog-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url('../assets/images/fog.png');
+    opacity: 0.4;
+    animation: fogMove 30s linear infinite;
+    pointer-events: none;
+}
+
+.fog-overlay:nth-child(2) {
+    top: -50%;
+    left: -50%;
+    animation: fogMove 40s linear infinite reverse;
+    opacity: 0.2;
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: var(--spacing-lg);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-family: var(--font-gothic);
+    font-size: 4rem;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 0 0 20px rgba(138, 166, 214, 0.5);
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.hero-content p {
+    font-family: var(--font-tech);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-xl);
+    color: var(--ethereal-blue);
+    text-shadow: 0 0 10px rgba(138, 166, 214, 0.3);
+}
+
+.cta-button {
+    background: linear-gradient(45deg, var(--spectral-purple), var(--blood-crimson));
+    color: var(--ghost-white);
+    border: none;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-family: var(--font-tech);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    animation: buttonPulse 3s ease-in-out infinite;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.cta-button:hover::before {
+    transform: translateX(100%);
+}
+
+.torch {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--ethereal-blue), transparent 70%);
+    animation: torchFlicker 3s infinite;
+}
+
+.torch.left {
+    left: 10px;
+}
+
+.torch.right {
+    right: 10px;
+}
+
+.floating-ghosts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.ghost {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    background: radial-gradient(circle, rgba(230,230,240,0.1), transparent 70%);
+    border-radius: 50% 50% 0 0;
+    animation: floatGhost 8s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes fogMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 20px rgba(138, 166, 214, 0.5); }
+    50% { text-shadow: 0 0 30px rgba(138, 166, 214, 0.8); }
+}
+
+@keyframes torchFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+    75% { opacity: 0.9; }
+}
+
+@keyframes floatGhost {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-30px) translateX(20px); }
+}
+
+.features {
+    background-color: var(--tombstone-gray);
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(57, 43, 77, 0.3),
+        rgba(74, 15, 29, 0.3));
+    pointer-events: none;
+}
+
+.features-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.features h2 {
+    font-family: var(--font-gothic);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--ghost-white);
+    text-shadow: 0 0 15px rgba(138, 166, 214, 0.3);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+}
+
+.feature-card {
+    background: rgba(11, 11, 15, 0.5);
+    border: 1px solid rgba(138, 166, 214, 0.1);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-lg);
+    position: relative;
+}
+
+.feature-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--ethereal-blue);
+    filter: drop-shadow(0 0 10px rgba(138, 166, 214, 0.5));
+}
+
+/* Tombstone Icon */
+.icon-tombstone .crack {
+    fill: none;
+    stroke: var(--ethereal-blue);
+    stroke-dasharray: 15;
+    stroke-dashoffset: 15;
+    animation: crackGlow 3s ease-in-out infinite;
+}
+
+/* Ghost Chain Icon */
+.icon-ghost-chain .ghost {
+    animation: floatIconGhost 4s ease-in-out infinite;
+}
+
+.icon-ghost-chain .chain {
+    fill: var(--ghost-white);
+}
+
+/* Vault Icon */
+.icon-vault .flame {
+    transform-origin: center bottom;
+    animation: flameFlicker 3s ease-in-out infinite;
+}
+
+.icon-vault .chest {
+    fill: var(--ghost-white);
+}
+
+.feature-card h3 {
+    font-family: var(--font-tech);
+    font-size: 1.5rem;
+    color: var(--ghost-white);
+    margin-bottom: var(--spacing-md);
+}
+
+.feature-card p {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--misty-sage);
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .feature-card {
+        padding: var(--spacing-lg);
+    }
+}
+
+.cta-section {
+    position: relative;
+    min-height: 60vh;
+    background-color: var(--midnight-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cta-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        rgba(57, 43, 77, 0.3) 0%,
+        rgba(11, 11, 15, 0.9) 100%
+    );
+    z-index: 1;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.tombstone-decoration {
+    width: 150px;
+    height: 200px;
+    background: linear-gradient(
+        to bottom,
+        var(--tombstone-gray),
+        var(--midnight-black)
+    );
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    opacity: 0.3;
+    animation: glowPulse 4s infinite alternate;
+}
+
+.tombstone-decoration.left {
+    transform: rotate(-5deg);
+}
+
+.tombstone-decoration.right {
+    transform: rotate(5deg);
+}
+
+.cta-text {
+    max-width: 600px;
+}
+
+.cta-text h2 {
+    font-family: var(--font-gothic);
+    font-size: 3.5rem;
+    color: var(--ghost-white);
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 0 0 20px rgba(138, 166, 214, 0.4);
+}
+
+.cta-text h3 {
+    font-family: var(--font-tech);
+    font-size: 2rem;
+    color: var(--ethereal-blue);
+    margin-bottom: var(--spacing-xl);
+    text-shadow: 0 0 15px rgba(138, 166, 214, 0.3);
+}
+
+.cta-button-large {
+    background: linear-gradient(45deg, 
+        var(--spectral-purple),
+        var(--blood-crimson)
+    );
+    color: var(--ghost-white);
+    border: none;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    font-family: var(--font-tech);
+    font-size: 1.6rem;
+    cursor: pointer;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.glow-effect {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(138, 166, 214, 0.4),
+        transparent 70%
+    );
+    animation: rotateGlow 10s linear infinite;
+}
+
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .tombstone-decoration {
+        display: none;
+    }
+    
+    .cta-text h2 {
+        font-size: 2.5rem;
+    }
+    
+    .cta-text h3 {
+        font-size: 1.5rem;
+    }
+}
+
+.faq {
+    background-color: var(--midnight-black);
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.faq::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(57, 43, 77, 0.2),
+        rgba(11, 11, 15, 0.95)
+    );
+    pointer-events: none;
+}
+
+.faq-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.faq h2 {
+    font-family: var(--font-gothic);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--ghost-white);
+    text-shadow: 0 0 15px rgba(138, 166, 214, 0.3);
+}
+
+.faq-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-card {
+    background: rgba(43, 43, 51, 0.5);
+    border: 1px solid rgba(138, 166, 214, 0.1);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.faq-card:hover {
+    transform: translateX(10px);
+    background: rgba(57, 43, 77, 0.5);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.faq-question h3 {
+    font-family: var(--font-tech);
+    font-size: 1.3rem;
+    color: var(--ethereal-blue);
+}
+
+.question-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--spectral-purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-tech);
+    font-size: 0.9rem;
+    color: var(--ghost-white);
+    opacity: 0.7;
+}
+
+.faq-card p {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--misty-sage);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .faq-card {
+        padding: var(--spacing-md);
+    }
+    
+    .faq-question h3 {
+        font-size: 1.1rem;
+    }
+    
+    .faq-card p {
+        font-size: 1rem;
+    }
+}
+
+/* Ghost Light Animation */
+.ghost-light {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(138, 166, 214, 0.8);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: floatParticle 8s infinite;
+    opacity: 0.8;
+    box-shadow: 0 0 8px rgba(138, 166, 214, 0.6);
+}
+
+/* Add more ghost lights with different animations */
+.ghost-light:nth-child(1) { animation-delay: 0s; left: 10%; }
+.ghost-light:nth-child(2) { animation-delay: 2s; left: 30%; }
+.ghost-light:nth-child(3) { animation-delay: 4s; left: 50%; }
+.ghost-light:nth-child(4) { animation-delay: 1s; left: 70%; }
+.ghost-light:nth-child(5) { animation-delay: 3s; left: 90%; }
+.ghost-light:nth-child(6) { animation-delay: 5s; left: 20%; }
+.ghost-light:nth-child(7) { animation-delay: 2.5s; left: 40%; }
+.ghost-light:nth-child(8) { animation-delay: 4.5s; left: 60%; }
+.ghost-light:nth-child(9) { animation-delay: 1.5s; left: 80%; }
+.ghost-light:nth-child(10) { animation-delay: 3.5s; left: 15%; }
+.ghost-light:nth-child(11) { animation-delay: 0.5s; left: 25%; }
+.ghost-light:nth-child(12) { animation-delay: 2.8s; left: 45%; }
+.ghost-light:nth-child(13) { animation-delay: 3.8s; left: 65%; }
+.ghost-light:nth-child(14) { animation-delay: 1.8s; left: 85%; }
+.ghost-light:nth-child(15) { animation-delay: 4.2s; left: 35%; }
+.ghost-light:nth-child(16) { animation-delay: 1.2s; left: 22%; }
+.ghost-light:nth-child(17) { animation-delay: 3.3s; left: 48%; }
+.ghost-light:nth-child(18) { animation-delay: 2.2s; left: 75%; }
+.ghost-light:nth-child(19) { animation-delay: 4.8s; left: 88%; }
+.ghost-light:nth-child(20) { animation-delay: 0.8s; left: 5%; }
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(50vh) scale(1.5);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Enhanced Fog Animation */
+.fog-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url('../assets/images/fog.png');
+    opacity: 0.4;
+    animation: fogMove 30s linear infinite;
+    pointer-events: none;
+}
+
+.fog-overlay:nth-child(2) {
+    top: -50%;
+    left: -50%;
+    animation: fogMove 40s linear infinite reverse;
+    opacity: 0.2;
+}
+
+/* Enhanced Button Animation */
+.cta-button {
+    animation: buttonPulse 3s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(138, 166, 214, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(138, 166, 214, 0.5);
+    }
+}
+
+/* New Animations */
+@keyframes crackGlow {
+    0%, 100% { 
+        stroke-dashoffset: 15;
+        opacity: 0.3;
+    }
+    50% { 
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes floatIconGhost {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+@keyframes flameFlicker {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* FAQ Icons */
+.faq-question svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: var(--ethereal-blue);
+    stroke-width: 1.5;
+    opacity: 0.7;
+}
+
+.icon-ghost-face {
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+.icon-ghost-face .ghost-shape {
+    fill: rgba(138, 166, 214, 0.1);
+}
+
+.icon-ghost-face .ghost-eyes {
+    fill: var(--ethereal-blue);
+}
+
+.icon-broken-chain {
+    animation: chainShake 4s ease-in-out infinite;
+}
+
+.icon-broken-chain path {
+    stroke-dasharray: 10;
+    stroke-dashoffset: 10;
+    animation: drawChain 3s ease-in-out infinite;
+}
+
+.icon-runes {
+    animation: runeGlow 4s ease-in-out infinite;
+}
+
+.icon-runes .rune-circle {
+    stroke: var(--ethereal-blue);
+    fill: rgba(138, 166, 214, 0.05);
+}
+
+.icon-runes .rune-marks {
+    stroke: var(--ethereal-blue);
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+    animation: drawRunes 4s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes chainShake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+}
+
+@keyframes drawChain {
+    0% { stroke-dashoffset: 10; }
+    50% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 10; }
+}
+
+@keyframes runeGlow {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(138, 166, 214, 0.3)); }
+    50% { filter: drop-shadow(0 0 8px rgba(138, 166, 214, 0.6)); }
+}
+
+@keyframes drawRunes {
+    0% { stroke-dashoffset: 20; }
+    50% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 20; }
+}
+
+.toast-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: linear-gradient(145deg, rgba(43, 43, 51, 0.95), rgba(22, 22, 29, 0.98));
+    border: 1px solid rgba(138, 166, 214, 0.3);
+    padding: var(--spacing-xxxl) var(--spacing-xxxl);
+    border-radius: 16px;
+    color: var(--ghost-white);
+    font-family: var(--font-tech);
+    font-size: 1.6rem;
+    min-width: 400px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 3000;
+    opacity: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 2px 8px rgba(138, 166, 214, 0.1);
+    backdrop-filter: blur(8px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 0 20px rgba(138, 166, 214, 0.3);
+    letter-spacing: 0.02em;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.loader-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.loader-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.ghost-loader {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    background: rgba(138, 166, 214, 0.2);
+    border-radius: 50% 50% 0 0;
+    position: relative;
+    animation: floatGhost 2s ease-in-out infinite;
+}
+
+.ghost-loader::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(138, 166, 214, 0.1);
+    border-radius: 50% 50% 0 0;
+    animation: pulseGhost 2s ease-in-out infinite;
+}
+
+.loader-text {
+    margin-top: 20px;
+    color: var(--ghost-white);
+    font-family: var(--font-tech);
+    font-size: 1.2rem;
+    opacity: 0.8;
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes pulseGhost {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(43, 43, 51, 0.7);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(138, 166, 214, 0.3);
+    border-radius: 4px;
+    border: 2px solid rgba(43, 43, 51, 0.7);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(138, 166, 214, 0.5);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(138, 166, 214, 0.3) rgba(43, 43, 51, 0.7);
+}

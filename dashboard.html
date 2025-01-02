@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graveyard Dashboard - RIP Protocol</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚰️</text></svg>">
+    
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <button class="connect-wallet-btn" id="connectWalletBtn">
+        <svg class="icon-ghost" viewBox="0 0 24 24">
+            <path d="M12 4c3.3 0 6 2.7 6 6v6c0 3.3-2.7 6-6 6s-6-2.7-6-6v-6c0-3.3 2.7-6 6-6z"/>
+        </svg>
+        Connect Wallet
+    </button>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard-body">
+            <div class="dashboard-container">
+                <nav class="sidebar">
+                    <div class="sidebar-header">
+                        <h1>RIP Protocol</h1>
+                        <div class="ghost-ornament"></div>
+                    </div>
+                    
+                    <div class="nav-links" id="tabNavigation">
+                        <button class="nav-item active" data-tab="vaultsContent">
+                            <svg class="nav-icon icon-vault" viewBox="0 0 24 24">
+                                <path class="flame" d="M12 6c1.1 0 2 .9 2 2 0 .7-.4 1.3-1 1.7.6.4 1 1 1 1.7 0 1.1-.9 2-2 2s-2-.9-2-2c0-.7.4-1.3 1-1.7-.6-.4-1-1-1-1.7 0-1.1.9-2 2-2z"/>
+                            </svg>
+                            Ghost Vault Performance
+                        </button>
+                        
+                        <button class="nav-item" data-tab="tombstonesContent">
+                            <svg class="nav-icon icon-tombstone" viewBox="0 0 24 24">
+                                <path d="M12 2c1 0 2 .5 2 1.5v3c0 .8-.5 1.5-2 1.5s-2-.7-2-1.5v-3c0-1 1-1.5 2-1.5z"/>
+                            </svg>
+                            Tombstone NFT Minting
+                        </button>
+                        
+                        <button class="nav-item" data-tab="leaderboardContent">
+                            <svg class="nav-icon icon-ghost-chain" viewBox="0 0 24 24">
+                                <path class="ghost" d="M12 4c1.5 0 3 1.5 3 3.5v4c0 2-1.5 3.5-3 3.5s-3-1.5-3-3.5v-4c0-2 1.5-3.5 3-3.5z"/>
+                            </svg>
+                            Haunted Leaderboard
+                        </button>
+                        
+                        <button class="nav-item" data-tab="decayContent">
+                            <svg class="nav-icon icon-decay" viewBox="0 0 24 24">
+                                <path d="M8 8l8 8M16 8l-8 8M12 6v12"/>
+                            </svg>
+                            Liquidity Decay Tracker
+                        </button>
+                        
+                        <button class="nav-item" data-tab="oracleContent">
+                            <svg class="nav-icon icon-oracle" viewBox="0 0 24 24">
+                                <path class="rune-circle" d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2z"/>
+                            </svg>
+                            Spirit Oracle Chatbot
+                        </button>
+                    </div>
+                    <div class="nav-footer">
+                        <a href="index.html" class="home-button">
+                            <svg class="nav-icon icon-home" viewBox="0 0 24 24">
+                                <path d="M12 3L4 9v12h16V9l-8-6z"/>
+                            </svg>
+                            Return to Crypt
+                        </a>
+                    </div>
+                </nav>
+
+                <main class="dashboard-content">
+                    <!-- Tab Content Containers -->
+                    <div class="tab-content">
+                        <div class="tab-pane" id="vaultsContent">
+                            <div class="stats-overview">
+                                <div class="stat-card">
+                                    <h3>Total Value Haunted</h3>
+                                    <div class="stat-value" id="totalValueHaunted">$7.3M</div>
+                                    <div class="stat-change positive">+12.4%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Active Ghost Vaults</h3>
+                                    <div class="stat-value" id="activeVaults">128</div>
+                                    <div class="stat-change">+18 this week</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Spectral APY</h3>
+                                    <div class="stat-value" id="spectralAPY">26.4%</div>
+                                    <div class="stat-change negative">-1.7%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="vault-section-header">
+                                <h2>Vaults of the Forgotten</h2>
+                                <svg class="ghost-ornament" viewBox="0 0 24 24">
+                                    <path d="M12 4c3.3 0 6 2.7 6 6v6c0 3.3-2.7 6-6 6s-6-2.7-6-6v-6c0-3.3 2.7-6 6-6z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="ghost-vault-tracker">
+                                <table class="vault-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Vault Name</th>
+                                            <th>Current APY</th>
+                                            <th>Tokens Staked</th>
+                                            <th>Time Since Death</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Phantom Pool Alpha</td>
+                                            <td class="apy">48.2%</td>
+                                            <td>85K GHOST</td>
+                                            <td>7 days</td>
+                                            <td>
+                                                <button class="stake-button-small">
+                                                    <svg class="icon-ghost" viewBox="0 0 24 24">
+                                                        <path d="M12 4c1.5 0 3 1.5 3 3.5v4c0 2-1.5 3.5-3 3.5s-3-1.5-3-3.5v-4c0-2 1.5-3.5 3-3.5z"/>
+                                                    </svg>
+                                                    Stake
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>NecroYield Vault</td>
+                                            <td class="apy">32.5%</td>
+                                            <td>52K WRAITH</td>
+                                            <td>5 days</td>
+                                            <td>
+                                                <button class="stake-button-small">
+                                                    <svg class="icon-ghost" viewBox="0 0 24 24">
+                                                        <path d="M12 4c1.5 0 3 1.5 3 3.5v4c0 2-1.5 3.5-3 3.5s-3-1.5-3-3.5v-4c0-2 1.5-3.5 3-3.5z"/>
+                                                    </svg>
+                                                    Stake
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Eternal Spirit Pool</td>
+                                            <td class="apy">41.7%</td>
+                                            <td>60K SOUL</td>
+                                            <td>3 days</td>
+                                            <td>
+                                                <button class="stake-button-small">
+                                                    <svg class="icon-ghost" viewBox="0 0 24 24">
+                                                        <path d="M12 4c1.5 0 3 1.5 3 3.5v4c0 2-1.5 3.5-3 3.5s-3-1.5-3-3.5v-4c0-2 1.5-3.5 3-3.5z"/>
+                                                    </svg>
+                                                    Stake
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="tombstonesContent">
+                            <h2>Tombstone NFT Minting</h2>
+                            <p>Immortalize fallen projects in our eternal blockchain cemetery.</p>
+                            
+                            <div class="tombstone-minting-container">
+                                <div class="minting-form">
+                                    <div class="form-group">
+                                        <label for="projectName">Project Name</label>
+                                        <input type="text" id="projectName" placeholder="e.g., LUNA Classic" maxlength="30">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="deathDate">Date of Death</label>
+                                        <input type="date" id="deathDate">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="epitaph">Epitaph</label>
+                                        <textarea id="epitaph" maxlength="100" placeholder="Write your memorial message..."></textarea>
+                                        <span class="char-count">0/100</span>
+                                    </div>
+                                    
+                                    <button class="mint-button">
+                                        <span class="torch left"></span>
+                                        Mint Memorial NFT
+                                        <span class="torch right"></span>
+                                    </button>
+                                </div>
+                                
+                                <div class="preview-tombstone">
+                                    <div class="tombstone-shape">
+                                        <h3 id="previewName">Project Name</h3>
+                                        <div class="death-date" id="previewDate">MMDD.YYYY</div>
+                                        <p class="epitaph-text" id="previewEpitaph">Here lies a fallen token...</p>
+                                        <div class="rune-decorations"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="leaderboardContent">
+                            <div class="section-header">
+                                <h2>Haunted Leaderboard</h2>
+                                <button class="refresh-button">
+                                    <svg class="icon-refresh" viewBox="0 0 24 24">
+                                        <path d="M12 4V2.21c0-.45-.54-.67-.85-.35l-2.8 2.79c-.2.2-.2.51 0 .71l2.8 2.79c.31.32.85.09.85-.35V6c3.31 0 6 2.69 6 6 0 .79-.15 1.56-.44 2.25-.15.36-.04.77.23 1.04.51.51.51 1.37.33 1.64-.34.37-.91.57-1.91.57-2.95 0-4.42-3.58-8-8-8z"/>
+                                    </svg>
+                                    Refresh Spirits
+                                </button>
+                            </div>
+                            
+                            <div class="haunted-stakers-leaderboard">
+                                <table class="leaderboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <th>Spirit</th>
+                                            <th>Tokens Staked</th>
+                                            <th>Haunted Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leaderboardBody">
+                                        <!-- Populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="decayContent">
+                            <h2>Liquidity Decay Tracker</h2>
+                            <p>Watch as abandoned tokens fade into the void...</p>
+                            
+                            <div class="liquidity-decay-tracker">
+                                <div class="decay-chart-container">
+                                    <canvas id="decayChart"></canvas>
+                                </div>
+                                
+                                <div class="decay-legend">
+                                    <div class="legend-item" data-token="LUNA Classic">
+                                        <span class="legend-icon">⚰️</span>
+                                        <span class="legend-text">LUNA Classic</span>
+                                    </div>
+                                    <div class="legend-item" data-token="SafeMoon">
+                                        <span class="legend-icon">☠️</span>
+                                        <span class="legend-text">SafeMoon</span>
+                                    </div>
+                                    <div class="legend-item" data-token="Squid Game">
+                                        <span class="legend-icon">👻</span>
+                                        <span class="legend-text">Squid Game</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="oracleContent">
+                            <h2>Spirit Oracle Interface</h2>
+                            <p>Commune with the beyond...</p>
+                            
+                            <div class="oracle-interface">
+                                <div class="oracle-messages" id="oracleMessages">
+                                    <div class="oracle-message">
+                                        <span class="typing-text">The spirits await your inquiry...</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="oracle-input">
+                                    <input type="text" id="userQuestion" placeholder="Ask the spirits..." maxlength="100">
+                                    <button class="consult-button">
+                                        <svg class="icon-runes" viewBox="0 0 24 24">
+                                            <path class="rune-circle" d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2z"/>
+                                            <path class="rune-marks" d="M8 8l8 8M16 8l-8 8M12 6v12M7 12h10"/>
+                                        </svg>
+                                        Consult the Oracle
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/dashboard.js"></script>
+</body>
+</html> 
