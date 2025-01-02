@@ -790,12 +790,11 @@ body {
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transition: opacity 0.5s ease;
+    transition: none;
 }
 
 .loader-screen.hidden {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 .loader-content {
@@ -865,4 +864,18 @@ body {
 * {
     scrollbar-width: thin;
     scrollbar-color: rgba(138, 166, 214, 0.3) rgba(43, 43, 51, 0.7);
+}
+
+.fade-transition {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-transition.visible {
+    opacity: 1;
+}
+
+main {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
 }
