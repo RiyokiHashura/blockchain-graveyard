@@ -31,9 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ctaButton) {
         ctaButton.addEventListener('click', async (e) => {
             e.preventDefault();
-            // Fade out current content
-            document.body.classList.add('fade-transition');
-            
             if (transitionLoader) {
                 transitionLoader.style.display = 'flex';
                 const loaderText = transitionLoader.querySelector('.loader-text');
@@ -41,11 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     loaderText.textContent = "Opening the gates to the beyond...";
                 }
             }
-            
-            // Add longer delay for the fade effect
             setTimeout(() => {
                 window.location.href = 'https://blockchaingraveyard.xyz/dashboard';
-            }, 2000); // Reduced from 4900ms to 2000ms for better UX
+            }, 4900);
         });
     }
 });
