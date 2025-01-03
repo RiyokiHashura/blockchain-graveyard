@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Fade in the dashboard
+    document.body.style.opacity = '1';
+    
     console.log('Initializing dashboard');
     
     // Debug log to check if elements exist
@@ -397,35 +400,55 @@ window.switchTab = function(tabId) {
 
 function initializeOracle() {
     const messages = document.getElementById('oracleMessages');
-    const input = document.getElementById('userQuestion');
-    const consultButton = document.querySelector('.consult-button');
+    const input = document.querySelector('#userQuestion');
+    const submitButton = document.querySelector('.consult-button');
     
-    if (!consultButton) return;
+    console.log('Oracle elements:', {messages, input, submitButton});
 
-    consultButton.addEventListener('click', () => {
-        const question = input.value.trim();
-        if (!question) {
-            addMessage("The void whispers... but says nothing.");
-            return;
+    if (!submitButton || !input || !messages) {
+        console.error('Oracle elements not found');
+        return;
+    }
+
+    submitButton.addEventListener('click', handleConsult);
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleConsult();
         }
+    });
+
+    function handleConsult() {
+        const question = input.value.trim();
+        if (!question) return;
         
+        console.log('Sending message:', question);
         addMessage(question, true);
         input.value = '';
-        consultButton.disabled = true;
         
         setTimeout(() => {
+            const responses = [
+                "The spirits whisper of great volatility...",
+                "Through the ethereal mist, I see both triumph and tribulation...",
+                "The ancient ones have witnessed similar patterns before...",
+                "The void speaks of hidden opportunities, but also great risk...",
+                "Beware the path you seek, for it is shrouded in uncertainty..."
+            ];
             const response = responses[Math.floor(Math.random() * responses.length)];
             addMessage(response);
-            consultButton.disabled = false;
         }, 1500);
-    });
-    
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !consultButton.disabled) {
-            consultButton.click();
-        }
-    });
+    }
+
+    function addMessage(text, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `oracle-message ${isUser ? 'user' : ''}`;
+        messageDiv.innerHTML = `<span class="typing-text">${text}</span>`;
+        messages.appendChild(messageDiv);
+        messages.scrollTop = messages.scrollHeight;
+    }
 }
+
+// Initialize Oracle when page loads
+document.addEventListener('DOMContentLoaded', initializeOracle);
 
 function initializeTabTransitions() {
     const loadingMessages = [
@@ -589,9 +612,3 @@ document.querySelectorAll('.stake-button-small').forEach(button => {
         showStakeToast('Connect your wallet to stake!');
     });
 });
-
-
-
-
-
-
