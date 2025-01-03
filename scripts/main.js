@@ -1,56 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize loaders
+    console.log('Main script loaded!');
+    
     const initialLoader = document.getElementById('initial-loader');
     const transitionLoader = document.getElementById('transition-loader');
     const mainContent = document.querySelector('main');
+    const ctaButton = document.querySelector('.cta-button');
+    const ghostsContainer = document.querySelector('.floating-ghosts');
     
-    // Initially hide main content
-    mainContent.style.opacity = '0';
-    transitionLoader.style.display = 'none';
-    
-    // Hide initial loader and fade in content
-    setTimeout(() => {
-        initialLoader.classList.add('fade-out');
+    // Only run loader logic if elements exist
+    if (initialLoader && mainContent) {
+        mainContent.style.opacity = '0';
+        if (transitionLoader) transitionLoader.style.display = 'none';
+        
         setTimeout(() => {
-            initialLoader.style.display = 'none';
-            // Fade in main content
-            mainContent.style.transition = 'opacity 1s ease-in';
-            mainContent.style.opacity = '1';
-        }, 500);
-    }, 2000);
-    
-    // Handle navigation with transitions
-    document.querySelectorAll('[data-href]').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = button.getAttribute('data-href');
-            const isGraveyard = button.textContent.includes('Graveyard');
-            
-            // Show loader immediately
-            const transitionLoader = document.getElementById('transition-loader');
-            transitionLoader.style.display = 'flex';
-            transitionLoader.querySelector('.loader-text').textContent = 
-                isGraveyard ? "Opening the gates to the beyond..." : 
-                             "Preparing your spectral stake...";
-            
-            // Navigate after delay
+            initialLoader.classList.add('fade-out');
             setTimeout(() => {
-                const targetUrl = href.endsWith('.html') ? href : href + '.html';
-                window.location.href = targetUrl;
-            }, 4900);
-        });
-    });
+                initialLoader.style.display = 'none';
+                mainContent.style.transition = 'opacity 1s ease-in';
+                mainContent.style.opacity = '1';
+            }, 500);
+        }, 2000);
+    }
     
-    // For the stake button clicks
-    document.querySelectorAll('.stake-button-small').forEach(button => {
-        button.addEventListener('click', async (e) => {
+    // Only initialize ghosts if container exists
+    if (ghostsContainer) {
+        initializeFloatingGhosts();
+    }
+    
+    // Only add CTA button listener if it exists
+    if (ctaButton) {
+        ctaButton.addEventListener('click', async (e) => {
             e.preventDefault();
-            showToast('Connect your wallet to stake!');
+            // Fade out current content
+            document.body.classList.add('fade-transition');
+            
+            if (transitionLoader) {
+                transitionLoader.style.display = 'flex';
+                const loaderText = transitionLoader.querySelector('.loader-text');
+                if (loaderText) {
+                    loaderText.textContent = "Opening the gates to the beyond...";
+                }
+            }
+            
+            // Add longer delay for the fade effect
+            setTimeout(() => {
+                window.location.href = 'https://blockchaingraveyard.xyz/dashboard';
+            }, 2000); // Reduced from 4900ms to 2000ms for better UX
         });
-    });
-    
-    // Initialize floating ghosts
-    initializeFloatingGhosts();
+    }
 });
 
 function initializeFloatingGhosts() {
